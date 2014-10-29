@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,62 +16,93 @@
 package com.ozd.touche.cheat.management;
 
 import com.ozd.touche.canvas.CheatCanvas;
-import com.ozd.touche.cheat.base.Cheat;
 import com.ozd.touche.cheat.base.CheatContainer;
 import java.util.ArrayList;
 
 /**
+ * This is the one class that you should take care of all the things. Initialize
+ * this with a canvas and a list of cheats prepared, and you are set.
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
  */
 public class CheatManager {
-    
-    ArrayList<CheatListener> listeners;
-    CheatCanvas canvas;
-    CheatContainer cheats;
-    HitManager hits;
-    int timeOut;
-    
+
+    private final ArrayList<CheatListener> listeners;
+    private final CheatCanvas canvas;
+    private final CheatContainer cheats;
+    private final HitManager hits;
+    private final int timeOut;
+
+    /**
+     *
+     * @param canvas is the area that holds the dimensions, position and the
+     * model of your touchable cheating area.
+     * @param cheats is a subclass of ArrayList containing a series of cheats.
+     * You should add your cheats to the list. They are all checked after each
+     * touch.
+     * @param timeOut is the time (in milliseconds) that the touches made in the
+     * touchable area becomes invalid. Set it to 0 if you don't want timeout
+     * functionality.
+     */
     public CheatManager(CheatCanvas canvas, CheatContainer cheats, int timeOut) {
         listeners = new ArrayList<>();
-        hits = new HitManager(timeOut);
         this.canvas = canvas;
         this.cheats = cheats;
         this.timeOut = timeOut;
+        hits = new HitManager(this.timeOut);
     }
-    
+
+    /**
+     * Adds a listener which is invoked if a cheat gets activated.
+     *
+     * @param listener is a listener implementing CheatListener interface.
+     */
     public void addListener(CheatListener listener) {
         if (listener == null) {
             return;
         }
         listeners.add(listener);
     }
-    
+
+    /**
+     * Remove a listener to stop it from getting called after touch.
+     *
+     * @param listener is a listener implementing CheatListener interface.
+     */
     public void removeListener(CheatListener listener) {
         if (listener == null) {
             return;
         }
         listeners.remove(listener);
     }
-    
+
+    /**
+     * This is the method that you should forward all of the touches made to
+     * your screen. You can filter the ones that made in the cheating area to
+     * avoid the out of bound touches to reset the touch buffer of the manager
+     * or forward all touches * (recommended) to this method in your game loop.
+     *
+     * @param x is the x position of the point touched by user.
+     * @param y is the x position of the point touched by user.
+     */
     public void click(int x, int y) {
         int cell = this.canvas.touch(x, y);
         hits.hit(cell);
-        
+
         int[] input = hits.getHits();
-        
-        for (Cheat cheat : cheats) {
-            if (cheat.check(input)) {
-                notifyListeners(cheat.getName());
-                hits.clear();
-            }
+
+        String s = cheats.check(input);
+
+        if (s != null) {
+            notifyListeners(s);
+            hits.clear();
         }
     }
-    
+
     private void notifyListeners(String name) {
         for (CheatListener l : listeners) {
             l.cheatActivated(name);
         }
     }
-    
+
 }

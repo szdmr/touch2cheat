@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,48 +15,57 @@
  */
 package com.ozd.touche.canvas;
 
-import com.ozd.touche.canvas.model.CheatCanvasModel;
-
 /**
+ * This class represents the the touchable area of the screen.
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
+ * @see CheatCanvasModel
  */
 public class CheatCanvas {
-    
+
     private final int originX;
     private final int originY;
     private final int width;
     private final int height;
-    private final int minX;
-    private final int minY;
-    private final int maxX;
-    private final int maxY;
     private final CheatCanvasModel model;
-    
-    
+
+    /**
+     *
+     * @param originX represents the x-axis location of origin of the
+     * cheat-enabled area in the actual screen.
+     * @param originY represents the y-axis location of origin of the
+     * cheat-enabled area in the actual screen.
+     * @param width represents the width of the cheat-enabled area.
+     * @param height represents the height of the cheat-enabled area.
+     * @param model is the model that you want your cheat-enabled area to be.
+     * @see CheatCanvasModel
+     * @throws IllegalArgumentException when model is null.
+     */
     public CheatCanvas(int originX, int originY, int width, int height, CheatCanvasModel model) {
+        if (model == null) {
+            throw new IllegalArgumentException("Canvas model cannot be null.");
+        }
         this.originX = originX;
         this.originY = originY;
         this.width = width;
         this.height = height;
-        this.minX = originX;
-        this.minY = originY;
-        this.maxX = this.minX + width;
-        this.maxY = this.minY + height;
         this.model = model;
     }
-    
+
+    /**
+     * This method is not recommended to be called directly.
+     *
+     * @param posX is the position of the touched point on the X axis.
+     * @param posY is the position of the touched point on the Y axis.
+     * @return resulting cell or direction depending on the model. -1 if it is
+     * out of bounds.
+     */
     public int touch(int posX, int posY) {
-        float x = (float)posX;
-        float y = (float)posY;
-        
-        x = (x-originX)/width;
-        y = (y-originY)/width;
+        float x = (float) posX;
+        float y = (float) posY;
+
+        x = (x - originX) / width;
+        y = (y - originY) / height;
         return this.model.touch(x, y);
     }
-    
-    
-    
-    
-
 }

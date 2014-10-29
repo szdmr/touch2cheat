@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,18 @@
 package com.ozd.touche.cheat.management;
 
 /**
+ * This is the interface that should be implemented by the class which is going
+ * to take action when a cheat is successfully activated.
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
  */
 public interface CheatListener {
-    
+
+    /**
+     * At most one cheat can be activated for a single touch.
+     *
+     * @param cheatName is the name of the cheat that is activated.
+     *
+     */
     public void cheatActivated(String cheatName);
 }

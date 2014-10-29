@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ozd.touche.canvas.model;
+package com.ozd.touche.canvas;
 
 /**
+ * This class represents a cheating area. It models a grid with m*n cells.
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
  */
 public class Grid extends CheatCanvasModel {
 
-    public final int columns;
-    public final int rows;
+    private final int columns;
+    private final int rows;
     private final float barWidth;
     private final float barHeight;
 
+    /**
+     *
+     * @param columns represents the number of columns desired.
+     * @param rows represents the number of rows desired.
+     */
     public Grid(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
@@ -34,7 +40,7 @@ public class Grid extends CheatCanvasModel {
     }
 
     @Override
-    public int touch(float posX, float posY) {
+    protected int touch(float posX, float posY) {
         if (posX < 0) {
             return -1;
         }
@@ -50,7 +56,7 @@ public class Grid extends CheatCanvasModel {
 
         int row = (int) (posY / barHeight);
         int column = (int) (posX / barWidth);
-        
+
         return row * columns + column;
     }
 

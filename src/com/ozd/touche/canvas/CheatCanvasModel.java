@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ozd.touche.canvas.model;
+package com.ozd.touche.canvas;
 
 /**
+ * Parent class for different canvas models.
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
  */
 public abstract class CheatCanvasModel {
-    
-    public abstract int touch(float posX, float posY);
-    
+
+    /**
+     * You better not call this function directly.
+     *
+     * @param posX x position of the point user touched.
+     * @param posY y position of the point user touched.
+     * @return the index of the cell for Grid or the direction for the DPad.
+     */
+    protected abstract int touch(float posX, float posY);
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,26 @@ package com.ozd.touche.cheat.base;
 import java.util.ArrayList;
 
 /**
+ * Extends ArrayList of type Cheat and implements a method to check for an
+ * enabled cheat.
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
  */
 public class CheatContainer extends ArrayList<Cheat> {
-    
-    public void check(int[] input) {
-        
+
+    /**
+     *
+     * @param input is the points that the user touched.
+     * @return name of the activated cheat. null if no cheats are activated.
+     */
+    public String check(int[] input) {
+
+        for (Cheat cheat : this) {
+            if (cheat.check(input)) {
+                return cheat.getName();
+            }
+        }
+        return null;
     }
-    
+
 }

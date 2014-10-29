@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Seyfülislam.
+ * Copyright 2014 Seyfülislam Özdemir.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,18 +20,34 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Seyfülislam
+ * @author Seyfülislam Özdemir
  */
 public class HitManager {
 
-    private ArrayList<Hit> hits;
-    private int timeOut;
+    private final ArrayList<Hit> hits;
+    private final int timeOut;
 
+    /**
+     * 
+     * @param timeOut is the desired timeout in milliseconds. Set it to 0 if you 
+     * want no timeouts and only want to check for bounds.
+     */
     protected HitManager(int timeOut) {
         hits = new ArrayList<>();
         this.timeOut = timeOut;
     }
 
+    /** This method processes new touch according to the following rules: 
+     * <br>
+     * If cell is -1, all hits are cleared as the touch is out of bounds of cheating area.
+     * <br>
+     * Else it holds the cell index in a List.
+     * <br>
+     * Before returning, it clears all the timed out touches if timeOut is not set to 0 
+     * during initialization.
+     * 
+     * @param cell is the cell index returned by the CheatCanvas.
+     */
     protected void hit(int cell) {
         if (cell == -1) {
             hits.clear();
@@ -46,6 +62,10 @@ public class HitManager {
         }
     }
 
+    /**
+     * 
+     * @return the array of the indexes of the valid touches.
+     */
     public int[] getHits() {
         int[] hitArray = new int[hits.size()];
         for (int i = 0; i < hits.size(); i++) {
@@ -53,7 +73,10 @@ public class HitManager {
         }
         return hitArray;
     }
-
+    
+    /**
+     * Clears the inputs.
+     */
     protected void clear() {
         this.hits.clear();
     }
