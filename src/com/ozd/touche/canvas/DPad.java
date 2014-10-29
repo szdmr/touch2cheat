@@ -56,6 +56,19 @@ public class DPad extends CheatCanvasModel {
 
     @Override
     protected int touch(float posX, float posY) {
+        if (posX < 0) {
+            return -1;
+        }
+        if (posY < 0) {
+            return -1;
+        }
+        if (posX >= 1) {
+            return -1;
+        }
+        if (posY >= 1) {
+            return -1;
+        }
+
         float left = calculateLeft(posX, posY);
         float right = calculateRight(posX, posY);
         float down = calculateDown(posX, posY);
@@ -92,5 +105,4 @@ public class DPad extends CheatCanvasModel {
     private float calculateUp(float x, float y) {
         return (float) Math.sqrt(Math.pow(x - P4X, 2) + Math.pow(y - P4Y, 2));
     }
-
 }
