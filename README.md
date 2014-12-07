@@ -19,7 +19,6 @@ Library to embed cheats to games on touchscreen devices lacking a physical keybo
 * Cheat Recorder - Creator GUI
 * ANY RECOMMENDATIONS HERE
 
-=========================
 ## How to Use
 
 See project wiki to see how easy it is to use. https://github.com/szdmr/touch2cheat/wiki
